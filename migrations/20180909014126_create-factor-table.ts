@@ -1,9 +1,8 @@
 import * as Knex from "knex";
-
-const TABLE_NAME = "factor";
+import { DbTable } from "../src/infrastructure/db";
 
 export async function up(knex: Knex) {
-  return knex.schema.createTable(TABLE_NAME, t => {
+  return knex.schema.createTable(DbTable.Factor, t => {
     t.bigIncrements("id").primary();
     t.specificType("coordinates", "POINT").notNullable();
     t.string("kind", 36).notNullable();
@@ -12,5 +11,5 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-  return knex.schema.dropTable(TABLE_NAME);
+  return knex.schema.dropTable(DbTable.Factor);
 }
