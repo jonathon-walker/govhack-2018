@@ -1,5 +1,8 @@
 application:
   port: 3000
+here:
+  app: 8wXkwyaiOQ88gVFY0SAL
+  secret: zzSC8__n856WUf7mDyeeKQ
 knex:
   client: "pg"
   debug: true
