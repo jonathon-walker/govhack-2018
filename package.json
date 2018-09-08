@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/jonathon-walker/govhack-2018#readme",
   "dependencies": {
-    "@types/axios": "^0.14.0",
     "axios": "^0.18.0",
     "config": "^2.0.1",
     "js-yaml": "^3.12.0",
@@ -36,6 +35,7 @@
   },
   "devDependencies": {
     "@types/config": "0.0.34",
+    "@types/axios": "^0.14.0",
     "@types/knex": "^0.14.23",
     "@types/koa": "^2.0.46",
     "@types/koa-router": "^7.0.31",
