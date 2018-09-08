@@ -1,5 +1,9 @@
-import * as express from "express";
+import * as koa from "koa";
 
-export const app = express();
-
-app.get("/", (req, res) => res.send("Govhack 2019"));
+export const app = new koa();
+app.use(async ctx => {
+  ctx.body = {
+    status: "success",
+    message: "govhack 2018"
+  };
+});
