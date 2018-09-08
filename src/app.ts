@@ -2,4 +2,4 @@ import * as express from "express";
 
 export const app = express();
 
-app.get("/", (req, res) => res.send("Govhack 2018"));
+app.get("/", (req, res) => res.send("Govhack 2019"));
