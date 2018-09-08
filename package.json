@@ -5,7 +5,11 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc",
+    "migrate": "knex migrate:latest",
+    "create-database": "node scripts/create-database.js",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down --remove-orphans --volumes"
   },
   "repository": {
     "type": "git",
@@ -21,14 +25,20 @@
   "dependencies": {
     "config": "^2.0.1",
     "js-yaml": "^3.12.0",
+    "knex": "^0.15.2",
     "koa": "^2.5.2",
     "koa-router": "^7.4.0",
+    "lodash": "^4.17.10",
+    "pg": "^7.4.3",
     "winston": "^3.1.0"
   },
   "devDependencies": {
+    "@types/config": "0.0.34",
+    "@types/knex": "^0.14.23",
     "@types/koa": "^2.0.46",
     "@types/koa-router": "^7.0.31",
-    "@types/config": "0.0.34",
+    "@types/lodash": "^4.14.116",
+    "@types/pg": "^7.4.10",
     "typescript": "^3.0.3"
   }
 }

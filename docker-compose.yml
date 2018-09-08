@@ -1,0 +1,16 @@
+version: "3"
+services:
+  postgres:
+    image: "postgres:9.6-alpine"
+    environment:
+      POSTGRES_USER: "dbuser"
+      POSTGRES_PASSWORD: ""
+    ports:
+      - "5432:5432"
+  pgadmin:
+    image: "dpage/pgadmin4"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "pgadmin@example.com"
+      PGADMIN_DEFAULT_PASSWORD: "5uper5ecret"
+    ports:
+      - "8080:80"
