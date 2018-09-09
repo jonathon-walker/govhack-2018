@@ -1,0 +1,348 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+</head>
+
+<body>
+    <div id="app">
+        <!-- Your code here -->
+
+        <md-app>
+            <md-app-toolbar class="md-primary">
+                <span class="md-title">MapSafe</span>
+            </md-app-toolbar>
+
+            <md-app-content>
+                <div style="width: 100%; height: 80vh" id="mapContainer"></div>
+            </md-app-content>
+
+            <md-app-drawer md-permanent="card">
+                <md-card-header>
+                    <div class="md-title">Directions</div>
+                </md-card-header>
+
+                <div class="md-card-content">
+                    <div class="md-layout">
+                        <div class="md-layout-item md-small-size-100">
+                            <md-field>
+                                <label for="FromLocation">From</label>
+                                <md-input name="from-location" id="from-location" autocomplete="from-location" v-model="searchDetails.fromLocation" />
+                            </md-field>
+                            <md-field>
+                                <label for="ToLocation">To</label>
+                                <md-input name="to-location" id="to-location" autocomplete="to-location" v-model="searchDetails.toLocation" />
+                            </md-field>
+                        </div>
+                    </div>
+                </div>
+                <md-card-actions>
+                    <md-button type="submit" class="md-primary md-raised" :disabled="sending" v-on:click="submit()">
+                        {{ sending ? 'Finding you' : 'Find' }} the safest Route
+                    </md-button>
+                </md-card-actions>
+                <div>
+                    <md-progress-bar md-mode="indeterminate" v-if="sending"></md-progress-bar>
+                </div>
+            </md-app-drawer>
+        </md-app>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue-material@beta"></script>
+    <script>
+        // HERE MAPS
+
+        const result = {
+            "response": {
+                "metaInfo": {
+                    "timestamp": "2018-09-09T04:10:03Z",
+                    "mapVersion": "8.30.87.152",
+                    "moduleVersion": "7.2.201833-37031",
+                    "interfaceVersion": "2.6.34",
+                    "availableMapVersion": [
+                        "8.30.87.152"
+                    ]
+                },
+                "route": [
+                    {
+                        "waypoint": [
+                            {
+                                "linkId": "-826632453",
+                                "mappedPosition": {
+                                    "latitude": 52.5162041,
+                                    "longitude": 13.378365
+                                },
+                                "originalPosition": {
+                                    "latitude": 52.5159999,
+                                    "longitude": 13.3778999
+                                },
+                                "type": "stopOver",
+                                "spot": 0.5384615,
+                                "sideOfStreet": "right",
+                                "mappedRoadName": "Pariser Platz",
+                                "label": "Pariser Platz",
+                                "shapeIndex": 0
+                            },
+                            {
+                                "linkId": "+572658050",
+                                "mappedPosition": {
+                                    "latitude": 52.5192669,
+                                    "longitude": 13.3853592
+                                },
+                                "originalPosition": {
+                                    "latitude": 52.5193,
+                                    "longitude": 13.3859
+                                },
+                                "type": "stopOver",
+                                "spot": 0.505618,
+                                "sideOfStreet": "right",
+                                "mappedRoadName": "Neustädtische Kirchstraße",
+                                "label": "Neustädtische Kirchstraße",
+                                "shapeIndex": 6
+                            }
+                        ],
+                        "mode": {
+                            "type": "fastest",
+                            "transportModes": [
+                                "car"
+                            ],
+                            "trafficMode": "disabled",
+                            "feature": []
+                        },
+                        "shape": [
+                            "52.5162041,13.378365",
+                            "52.5162792,13.3795345",
+                            "52.5165153,13.3832359",
+                            "52.5167084,13.3857894",
+                            "52.5178456,13.3855748",
+                            "52.5185323,13.385489",
+                            "52.5192669,13.3853592"
+                        ],
+                        "leg": [
+                            {
+                                "maneuver": [
+                                    {
+                                        "position": {
+                                            "latitude": 52.5162041,
+                                            "longitude": 13.378365
+                                        },
+                                        "instruction": "Head <span class=\"heading\">east</span> on <span class=\"street\">Pariser Platz</span>. <span class=\"distance-description\">Go for <span class=\"length\">119 m</span>.</span>",
+                                        "travelTime": 88,
+                                        "length": 119,
+                                        "shape": [
+                                            "52.5162041,13.378365",
+                                            "52.5162792,13.3795345"
+                                        ],
+                                        "note": [],
+                                        "id": "M1",
+                                        "_type": "PrivateTransportManeuverType"
+                                    },
+                                    {
+                                        "position": {
+                                            "latitude": 52.5162792,
+                                            "longitude": 13.3795345
+                                        },
+                                        "instruction": "Continue on <span class=\"next-street\">Unter den Linden</span>. <span class=\"distance-description\">Go for <span class=\"length\">427 m</span>.</span>",
+                                        "travelTime": 135,
+                                        "length": 427,
+                                        "shape": [
+                                            "52.5162792,13.3795345",
+                                            "52.5165153,13.3832359",
+                                            "52.5167084,13.3857894"
+                                        ],
+                                        "note": [],
+                                        "id": "M2",
+                                        "_type": "PrivateTransportManeuverType"
+                                    },
+                                    {
+                                        "position": {
+                                            "latitude": 52.5167084,
+                                            "longitude": 13.3857894
+                                        },
+                                        "instruction": "Turn <span class=\"direction\">left</span> onto <span class=\"next-street\">Neustädtische Kirchstraße</span>. <span class=\"distance-description\">Go for <span class=\"length\">286 m</span>.</span>",
+                                        "travelTime": 47,
+                                        "length": 286,
+                                        "shape": [
+                                            "52.5167084,13.3857894",
+                                            "52.5178456,13.3855748",
+                                            "52.5185323,13.385489",
+                                            "52.5192669,13.3853592"
+                                        ],
+                                        "note": [],
+                                        "id": "M3",
+                                        "_type": "PrivateTransportManeuverType"
+                                    },
+                                    {
+                                        "position": {
+                                            "latitude": 52.5192669,
+                                            "longitude": 13.3853592
+                                        },
+                                        "instruction": "Arrive at <span class=\"street\">Neustädtische Kirchstraße</span>. Your destination is on the right.",
+                                        "travelTime": 5,
+                                        "length": 37,
+                                        "shape": [
+                                            "52.5192669,13.3853592"
+                                        ],
+                                        "note": [
+                                            {
+                                                "type": "info",
+                                                "code": "previousIntersection",
+                                                "text": "The last intersection is <span class=\"street\">Dorotheenstraße</span>"
+                                            },
+                                            {
+                                                "type": "info",
+                                                "code": "nextIntersection",
+                                                "text": "If you reach <span class=\"next-street\">Georgenstraße</span>, you’ve gone too far"
+                                            }
+                                        ],
+                                        "id": "M4",
+                                        "_type": "PrivateTransportManeuverType"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "language": "en-us"
+            }
+        }
+        // Initialize the platform object:
+        let platform = new H.service.Platform({
+            'app_id': 'ZNaASCszEwTdL1DBDftm',
+            'app_code': 'VZdRG6ZwyuEN6V4oF1h8QA'
+        });
+
+        // Obtain the default map types from the platform object
+        let maptypes = platform.createDefaultLayers({ crossOrigin: true });
+
+
+        let map = {}
+
+        // VUE
+        Vue.use(VueMaterial.default)
+
+        ui = new Vue({
+            el: '#app',
+            data: () => ({
+                searchDetails: {
+                    fromLocation: null,
+                    toLocation: null,
+                    gender: null,
+                    age: null,
+                    email: null,
+                },
+                sending: false,
+                history: []
+            }),
+            mounted: function () {
+                map = new H.Map(
+                    document.getElementById('mapContainer'),
+                    maptypes.normal.map,
+                    {
+                        zoom: 13,
+                        center: { lng: 13.4, lat: 52.51 }
+                    });
+            },
+            methods: {
+                submit: function () {
+
+                    // SEND ADDRESS TO ENDPOINT
+
+
+                    ui.sending = !true;
+
+                    // Instantiate (and display) a map object:
+                    var routingParameters = {
+                        // The routing mode:
+                        'mode': 'fastest;car',
+                        // The start point of the route:
+                        'waypoint0': 'geo!50.1120423728813,8.68340740740811',
+                        // The end point of the route:
+                        'waypoint1': 'geo!52.5309916298853,13.3846220493377',
+                        // To retrieve the shape of the route we choose the route
+                        // representation mode 'display'
+                        'representation': 'display'
+                    };
+
+                    // Get an instance of the routing service:
+                    var router = platform.getRoutingService();
+
+                    // Call calculateRoute() with the routing parameters,
+                    // the callback and an error callback function (called if a
+                    // communication error occurs):
+                    router.calculateRoute(routingParameters, function (result) { console.log(result); },
+                        function (error) {
+                            alert(error.message);
+                        });
+
+                    var processRoute = function (result) {
+                        var route,
+                            routeShape,
+                            startPoint,
+                            endPoint,
+                            linestring;
+                        if (result.response.route) {
+                            // Pick the first route from the response:
+                            route = result.response.route[0];
+                            // Pick the route's shape:
+                            routeShape = route.shape;
+
+                            // Create a linestring to use as a point source for the route line
+                            linestring = new H.geo.LineString();
+
+                            // Push all the points in the shape into the linestring:
+                            routeShape.forEach(function (point) {
+                                var parts = point.split(',');
+                                linestring.pushLatLngAlt(parts[0], parts[1]);
+                            });
+
+                            // Retrieve the mapped positions of the requested waypoints:
+                            startPoint = route.waypoint[0].mappedPosition;
+                            endPoint = route.waypoint[1].mappedPosition;
+
+                            // Create a polyline to display the route:
+                            var routeLine = new H.map.Polyline(linestring, {
+                                style: { strokeColor: 'blue', lineWidth: 10 }
+                            });
+
+                            // Create a marker for the start point:
+                            var startMarker = new H.map.Marker({
+                                lat: startPoint.latitude,
+                                lng: startPoint.longitude
+                            });
+
+                            // Create a marker for the end point:
+                            var endMarker = new H.map.Marker({
+                                lat: endPoint.latitude,
+                                lng: endPoint.longitude
+                            });
+
+                            // Add the route polyline and the two markers to the map:
+                            map.addObjects([routeLine, startMarker, endMarker]);
+
+                            // Set the map's viewport to make the whole route visible:
+                            map.setViewBounds(routeLine.getBounds());
+                        }
+                    };
+                    this.sending = true;
+                    //map.setCenter({ lng: 151.2, lat: -33.8 })
+                    processRoute(result);
+
+                }
+            }
+        })
+
+
+
+    </script>
+</body>
+
+</html>
