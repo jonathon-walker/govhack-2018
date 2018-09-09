@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
     <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
     <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
     <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -58,8 +59,6 @@
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/vue-material@beta"></script>
     <script>
-        // HERE MAPS
-
         const result = {
             "response": {
                 "metaInfo": {
@@ -214,6 +213,13 @@
                 "language": "en-us"
             }
         }
+
+
+        // HERE MAPS
+        const GetRoute = () => new Promise(function (resolve, reject) {
+            setTimeout(resolve, 3000, result);
+        });
+
         // Initialize the platform object:
         let platform = new H.service.Platform({
             'app_id': 'ZNaASCszEwTdL1DBDftm',
@@ -252,36 +258,14 @@
                     });
             },
             methods: {
-                submit: function () {
+                submit: async function () {
 
                     // SEND ADDRESS TO ENDPOINT
+                    this.sending = true;
+                    const apiResponse = await GetRoute();
+                    this.sending = false;
+                    console.log(apiResponse);
 
-
-                    ui.sending = !true;
-
-                    // Instantiate (and display) a map object:
-                    var routingParameters = {
-                        // The routing mode:
-                        'mode': 'fastest;car',
-                        // The start point of the route:
-                        'waypoint0': 'geo!50.1120423728813,8.68340740740811',
-                        // The end point of the route:
-                        'waypoint1': 'geo!52.5309916298853,13.3846220493377',
-                        // To retrieve the shape of the route we choose the route
-                        // representation mode 'display'
-                        'representation': 'display'
-                    };
-
-                    // Get an instance of the routing service:
-                    var router = platform.getRoutingService();
-
-                    // Call calculateRoute() with the routing parameters,
-                    // the callback and an error callback function (called if a
-                    // communication error occurs):
-                    router.calculateRoute(routingParameters, function (result) { console.log(result); },
-                        function (error) {
-                            alert(error.message);
-                        });
 
                     var processRoute = function (result) {
                         var route,
@@ -332,9 +316,8 @@
                             map.setViewBounds(routeLine.getBounds());
                         }
                     };
-                    this.sending = true;
                     //map.setCenter({ lng: 151.2, lat: -33.8 })
-                    processRoute(result);
+                    processRoute(apiResponse);
 
                 }
             }
