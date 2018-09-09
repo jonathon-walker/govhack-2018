@@ -216,7 +216,8 @@
 
 
         // HERE MAPS
-        const GetRoute = () => new Promise(function (resolve, reject) {
+        const GetRoute = (from, to) => new Promise(function (resolve, reject) {
+            console.log(`hello from=${from}  to=${to}`);
             setTimeout(resolve, 3000, result);
         });
 
@@ -241,9 +242,6 @@
                 searchDetails: {
                     fromLocation: null,
                     toLocation: null,
-                    gender: null,
-                    age: null,
-                    email: null,
                 },
                 sending: false,
                 history: []
@@ -262,7 +260,7 @@
 
                     // SEND ADDRESS TO ENDPOINT
                     this.sending = true;
-                    const apiResponse = await GetRoute();
+                    const apiResponse = await GetRoute(this.searchDetails.fromLocation, this.searchDetails.toLocation);
                     this.sending = false;
                     console.log(apiResponse);
 
