@@ -1,8 +1,25 @@
 import * as koa from "koa";
-import UI from "./uid";
-import main from "./ui/main";
 
+import * as Router from "koa-router";
+import { log } from "./infrastructure/logger";
 export const app = new koa();
-app.use(async ctx => {
-  ctx.body = main();
+const router = new Router();
+
+import { routingRouter } from "./features/routing/routing-router";
+router.get("/", (ctx, next) => {
+  ctx.status = 200;
+  ctx.body = "govhack2018";
+  return next();
 });
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    ctx.status = 400;
+    ctx.body = `err ${err}`;
+    log.info("error: ", err.response.data);
+  }
+});
+app.use(router.routes());
+app.use(routingRouter.routes());
+app.use(router.allowedMethods());

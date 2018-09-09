@@ -1,1 +1,14 @@
-port: 3000
+application:
+  port: 3000
+here:
+  app: 8wXkwyaiOQ88gVFY0SAL
+  secret: zzSC8__n856WUf7mDyeeKQ
+knex:
+  client: "pg"
+  debug: false
+  connection:
+    host: "localhost"
+    port: 5432
+    user: "dbuser"
+    password: ""
+    database: "govhack"
