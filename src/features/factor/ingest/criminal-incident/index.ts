@@ -3,13 +3,14 @@ import path = require("path");
 import { NewFactorDbRow } from "../../models/factor-db-row";
 import { FactorKind } from "../../models/factor-kind";
 import { times, flatten, flattenDeep } from "lodash";
+import * as turf from "@turf/turf";
 
 interface CriminalIncidentSummaryRow {
   local_government_area: string;
-  rate_per_100000_population: number;
-  latitude: number;
-  longitude: number;
-  incidents_recorded: number;
+  rate_per_100000_population: string;
+  latitude: string;
+  longitude: string;
+  incidents_recorded: string;
 }
 
 export async function getNewFactors(): Promise<NewFactorDbRow[]> {
@@ -25,9 +26,9 @@ export async function getNewFactors(): Promise<NewFactorDbRow[]> {
 }
 
 function fromSummaryRow(row: CriminalIncidentSummaryRow): NewFactorDbRow[] {
-  return times(row.incidents_recorded, () => ({
+  return times(parseInt(row.incidents_recorded), () => ({
     kind: FactorKind.CriminalIncident,
-    coordinates: `point(${row.latitude}, ${row.longitude})`,
+    point: turf.point([parseFloat(row.longitude), parseFloat(row.latitude)]),
     impact: null
   }));
 }

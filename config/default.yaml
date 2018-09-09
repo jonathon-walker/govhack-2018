@@ -5,10 +5,15 @@ here:
   secret: zzSC8__n856WUf7mDyeeKQ
 knex:
   client: "pg"
-  debug: false
+  debug: true
   connection:
     host: "localhost"
     port: 5432
-    user: "dbuser"
-    password: ""
+    user: "govhack"
+    password: "govhack"
     database: "govhack"
+danger-area:
+  scale-factor: 1.5
+  impact-threshold: 20
+factor-impact-defaults:
+  criminal_incident: 5
