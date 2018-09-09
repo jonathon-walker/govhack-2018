@@ -5,6 +5,8 @@ import * as turf from "@turf/turf";
 
 const st = knexPostgis(db);
 
-// export function getFactors(polygon: turf.Polygon): Promise<FactorDbRow[]> {
-//   const boundary = st.geomFromGeoJSON(polygon);
-// }
+export function getFactors(
+  feature: turf.Feature<turf.Polygon>
+): Promise<FactorDbRow[]> {
+  throw new Error();
+}
