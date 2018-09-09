@@ -16,7 +16,7 @@ app.use(async (ctx, next) => {
   } catch (err) {
     ctx.status = 400;
     ctx.body = `err ${err}`;
-    log.info("ERR", err.data);
+    log.info("error: ", err.response.data);
   }
 });
 app.use(router.routes());
