@@ -29,5 +29,6 @@ export async function getRoute(ctx: koa.Context, next: () => Promise<any>) {
     );
   }
   ctx.body = result;
+  ctx.set("Access-Control-Allow-Origin", "*");
   return next();
 }

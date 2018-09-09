@@ -1,4 +1,5 @@
 import * as koa from "koa";
+
 import * as Router from "koa-router";
 import { log } from "./infrastructure/logger";
 export const app = new koa();
