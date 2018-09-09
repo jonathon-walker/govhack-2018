@@ -1,5 +1,6 @@
 import * as koa from "koa";
 import * as hereGateway from "../../gateways/here-maps-gateway";
+import { getDangerAreas } from "../danger-area/danger-area-service";
 import { log } from "../../infrastructure/logger";
 export async function getRoute(ctx: koa.Context, next: () => Promise<any>) {
   const start = ctx.request.query.start;
@@ -15,13 +16,21 @@ export async function getRoute(ctx: koa.Context, next: () => Promise<any>) {
       throw new Error(`failed to geocode ${JSON.stringify(data)}`);
     }
     const position = data.View[0].Result[0].Location.DisplayPosition;
-    return `${position.Latitude},${position.Longitude}`;
+    return {
+      lat: position.Latitude,
+      lng: position.Longitude
+    };
   });
 
+  const dangerAreas = getDangerAreas({
+    from: [geocode1.lng, geocode1.lat],
+    to: [geocode2.lng, geocode2.lat]
+  });
   const result = await hereGateway.getRouteFromHere(
-    `geo!${geocode1}`,
-    `geo!${geocode2}`,
-    `fastest;car;traffic:disabled`
+    `geo!${geocode1.lat},${geocode1.lng}`,
+    `geo!${geocode2.lat},${geocode2.lng}`,
+    `fastest;car;traffic:disabled`,
+    "52.517100760,13.3905424488;52.5169701849,13.391808451"
   );
   if (result.type === "ApplicationError") {
     throw new Error(

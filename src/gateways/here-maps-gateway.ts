@@ -5,7 +5,12 @@ import { GeocodeResponse } from "../features/routing/geocode-response";
 interface HereGeocodeResponse {
   Response: GeocodeResponse;
 }
-export async function getRouteFromHere(from: string, to: string, mode: string) {
+export async function getRouteFromHere(
+  from: string,
+  to: string,
+  mode: string,
+  avoidAreas: string = ""
+) {
   const url = `https://route.api.here.com/routing/7.2/calculateroute.json`;
 
   const params = {
@@ -14,7 +19,8 @@ export async function getRouteFromHere(from: string, to: string, mode: string) {
     waypoint0: from,
     waypoint1: to,
     mode,
-    representation: "display"
+    representation: "display",
+    avoidareas: avoidAreas
   };
   log.info(`params`, params);
   const result = await axios.get(url, {
