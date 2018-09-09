@@ -5,7 +5,7 @@ import { Feature, Point } from "@turf/turf";
 export interface FactorDbRow {
   id: number;
   kind: FactorKind;
-  point: Feature<Point>;
+  point: Point;
   impact: number | null;
 }
 
