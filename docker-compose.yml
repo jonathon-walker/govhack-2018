@@ -1,10 +1,11 @@
 version: "3"
 services:
-  postgres:
-    image: "postgres:9.6-alpine"
+  postgis:
+    image: "kartoza/postgis"
     environment:
-      POSTGRES_USER: "dbuser"
-      POSTGRES_PASSWORD: ""
+      POSTGRES_USER: "govhack"
+      POSTGRES_PASS: "govhack"
+      POSTGRES_DBNAME: "govhack"
     ports:
       - "5432:5432"
   pgadmin:

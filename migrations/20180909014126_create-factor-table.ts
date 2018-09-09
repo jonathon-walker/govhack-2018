@@ -4,7 +4,7 @@ import { DbTable } from "../src/infrastructure/db";
 export async function up(knex: Knex) {
   return knex.schema.createTable(DbTable.Factor, t => {
     t.bigIncrements("id").primary();
-    t.specificType("coordinates", "POINT").notNullable();
+    t.specificType("point", "geometry(point, 4326)").notNullable();
     t.string("kind", 36).notNullable();
     t.integer("impact").nullable();
   });
