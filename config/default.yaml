@@ -5,7 +5,7 @@ here:
   secret: zzSC8__n856WUf7mDyeeKQ
 knex:
   client: "pg"
-  debug: true
+  debug: false
   connection:
     host: "localhost"
     port: 5432
@@ -15,5 +15,6 @@ knex:
 danger-area:
   scale-factor: 1.5
   impact-threshold: 20
+  search-cell-side-in-km: 5
 factor-impact-defaults:
   criminal_incident: 5

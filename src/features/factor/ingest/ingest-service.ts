@@ -24,6 +24,6 @@ export async function ingestData(): Promise<void> {
   });
 
   log.info("starting ingest", { records: records.length });
-  await db.batchInsert(DbTable.Factor, take(records, 10));
+  await db.batchInsert(DbTable.Factor, records);
   log.info("finished ingest");
 }
