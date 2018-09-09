@@ -14,7 +14,7 @@ knex:
     database: "govhack"
 danger-area:
   scale-factor: 1.5
-  impact-threshold: 20
-  search-cell-side-in-km: 5
+  impact-threshold: 5000
+  search-cell-side-in-km: 0.2
 factor-impact-defaults:
-  criminal_incident: 5
+  criminal_incident: 0

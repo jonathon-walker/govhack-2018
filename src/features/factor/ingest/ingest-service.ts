@@ -1,5 +1,6 @@
 import { NewFactorDbRow } from "../models/factor-db-row";
 import * as criminalIncident from "./criminal-incident";
+import * as testData from "./test-data";
 import { db, st, DbTable } from "../../../infrastructure/db";
 import { log } from "../../../infrastructure/logger";
 import { flatten, take } from "lodash";
@@ -9,7 +10,7 @@ export interface NewFactorDataSource {
 }
 
 export async function ingestData(): Promise<void> {
-  const sources: NewFactorDataSource[] = [criminalIncident];
+  const sources: NewFactorDataSource[] = [criminalIncident, testData];
   const newFactorPromises = sources.map(x => x.getNewFactors());
   const newFactors = flatten(await Promise.all(newFactorPromises));
 
