@@ -1,3 +1,4 @@
+import "source-map-support/register";
 import * as config from "config";
 import { app } from "./src/app";
 import { log } from "./src/infrastructure/logger";

@@ -14,7 +14,7 @@ export async function ingestData(): Promise<void> {
   const newFactors = flatten(await Promise.all(newFactorPromises));
 
   const records = newFactors.map(factor => {
-    const geometry = factor.point.geometry!;
+    const geometry = factor.point;
     const pointWkt = `Point(${geometry.coordinates.join(" ")})`;
 
     return {

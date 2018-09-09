@@ -26,9 +26,24 @@ export async function getNewFactors(): Promise<NewFactorDbRow[]> {
 }
 
 function fromSummaryRow(row: CriminalIncidentSummaryRow): NewFactorDbRow[] {
-  return times(parseInt(row.incidents_recorded), () => ({
-    kind: FactorKind.CriminalIncident,
-    point: turf.point([parseFloat(row.longitude), parseFloat(row.latitude)]),
-    impact: null
-  }));
+  // return times(parseInt(row.incidents_recorded), () => ({
+  //   kind: FactorKind.CriminalIncident,
+  //   point: turf.point([parseFloat(row.longitude), parseFloat(row.latitude)]).geometry!,
+  //   impact: null
+  // }));
+
+  const incidents = parseInt(row.incidents_recorded);
+
+  return times(incidents, () => {
+    const point = turf.point([
+      parseFloat(row.longitude),
+      parseFloat(row.latitude)
+    ]);
+
+    return {
+      kind: FactorKind.CriminalIncident,
+      point: point.geometry!,
+      impact: null
+    };
+  });
 }
