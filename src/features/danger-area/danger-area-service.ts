@@ -31,9 +31,9 @@ export async function isDangerous(feature: turf.Feature<turf.Polygon>) {
   return impact > IMPACT_THRESHOLD;
 }
 
-import "source-map-support/register";
+// import "source-map-support/register";
 
-const areas = getDangerAreas({
-  from: [143.3885, -37.0263],
-  to: [141.3885, -35.0263]
-});
+// const areas = getDangerAreas({
+//   from: [143.3885, -37.0263],
+//   to: [141.3885, -35.0263]
+// });
