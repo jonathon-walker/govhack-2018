@@ -24,11 +24,13 @@
   },
   "homepage": "https://github.com/jonathon-walker/govhack-2018#readme",
   "dependencies": {
+    "@turf/turf": "^5.1.6",
     "axios": "^0.18.0",
     "config": "^2.0.1",
     "csvtojson": "^2.0.8",
     "js-yaml": "^3.12.0",
     "knex": "^0.15.2",
+    "knex-postgis": "^0.7.0",
     "koa": "^2.5.2",
     "koa-router": "^7.4.0",
     "lodash": "^4.17.10",
@@ -36,10 +38,11 @@
     "winston": "^3.1.0"
   },
   "devDependencies": {
-    "@types/config": "0.0.34",
     "@types/axios": "^0.14.0",
+    "@types/config": "0.0.34",
     "@types/csvtojson": "^1.1.5",
     "@types/knex": "^0.14.23",
+    "@types/knex-postgis": "^0.2.2",
     "@types/koa": "^2.0.46",
     "@types/koa-router": "^7.0.31",
     "@types/lodash": "^4.14.116",

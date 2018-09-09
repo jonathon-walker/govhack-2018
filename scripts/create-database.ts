@@ -18,9 +18,11 @@ async function create() {
 
   await db.query(`CREATE DATABASE ${connection.database}`);
   log.info("db created");
+
   await db.query(`ALTER DATABASE ${connection.database} SET timezone TO 'UTC'`);
   await db.query("SELECT pg_reload_conf()");
   log.info("db timezone set to UTC");
+
   await db.end();
 }
 

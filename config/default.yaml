@@ -12,3 +12,5 @@ knex:
     user: "dbuser"
     password: ""
     database: "govhack"
+danger-area:
+  search-scale-factor: 1.5

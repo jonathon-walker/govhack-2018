@@ -1,6 +1,6 @@
 import { NewFactorDbRow } from "../models/factor-db-row";
 import * as criminalIncident from "./criminal-incident";
-import { db, DbTable } from "../../../infrastructure/db";
+import { db, st, DbTable } from "../../../infrastructure/db";
 import { log } from "../../../infrastructure/logger";
 import { flatten } from "lodash";
 
@@ -15,7 +15,7 @@ export async function ingestData(): Promise<void> {
 
   const records = newFactors.map(factor => ({
     ...factor,
-    coordinates: db.raw(factor.coordinates)
+    point: st.geomFromGeoJSON(factor.point)
   }));
 
   log.info("starting ingest", { records: records.length });

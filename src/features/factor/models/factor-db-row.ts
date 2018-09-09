@@ -1,11 +1,11 @@
 import { FactorKind } from "./factor-kind";
-import { Point } from "../../../infrastructure/db";
 import { Omit } from "../../shared/omit";
+import { Feature, Point } from "@turf/turf";
 
 export interface FactorDbRow {
   id: number;
   kind: FactorKind;
-  coordinates: string;
+  point: Feature<Point>;
   impact: number | null;
 }
 
