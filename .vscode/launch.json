@@ -8,6 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
+      "console": "integratedTerminal",
       "program": "${workspaceFolder}/src/features/danger-area/danger-area-service.js",
       "outFiles": ["${workspaceFolder}/**/*.js"]
     }

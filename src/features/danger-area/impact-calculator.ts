@@ -2,6 +2,7 @@ import * as turf from "@turf/turf";
 import * as repo from "../factor/factor-repository";
 import { FactorKind } from "../factor/models/factor-kind";
 import * as config from "config";
+import { log } from "../../infrastructure/logger";
 
 const FACTOR_IMPACT_DEFAULTS = config.get<Record<FactorKind, number>>(
   "factor-impact-defaults"

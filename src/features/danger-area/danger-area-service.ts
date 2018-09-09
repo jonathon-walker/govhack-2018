@@ -26,6 +26,8 @@ export async function isDangerous(feature: turf.Feature<turf.Polygon>) {
 import "source-map-support/register";
 
 const areas = getDangerAreas({
-  from: [142.3885, -36.0263],
-  to: [140.3885, -35.0263]
+  from: [143.3885, -37.0263],
+  to: [141.3885, -35.0263]
 });
+
+log.info("areas", areas);

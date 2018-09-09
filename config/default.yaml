@@ -5,7 +5,7 @@ here:
   secret: zzSC8__n856WUf7mDyeeKQ
 knex:
   client: "pg"
-  debug: false
+  debug: true
   connection:
     host: "localhost"
     port: 5432
